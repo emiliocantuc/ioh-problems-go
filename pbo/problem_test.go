@@ -15,7 +15,7 @@ func testEval(p Problem) float64 {
 
 // Tests that all problems increment their eval count properly
 func TestNEvals(t *testing.T) {
-	for i := 1; i <= 24; i++ { // TODO make 25
+	for i := 0; i <= 24; i++ { // TODO make 25
 
 		p := GetProblem(i, 9, 0)
 
@@ -38,7 +38,7 @@ func TestNEvals(t *testing.T) {
 // Tests that all problems implement seed instances correctly
 func TestSeeds(t *testing.T) {
 
-	for i := 1; i <= 24; i++ { // TODO make 25
+	for i := 0; i <= 24; i++ { // TODO make 25
 
 		p1 := GetProblem(i, 9, 0)
 		p2 := GetProblem(i, 9, 0)
@@ -57,6 +57,7 @@ func TestProblems(t *testing.T) {
 		id    int
 		score float64
 	}{
+		{0, 0.0},
 		{1, 5.0},
 		{2, 2.0},
 		{3, 24.0},

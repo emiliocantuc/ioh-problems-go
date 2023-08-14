@@ -4,6 +4,14 @@ import (
 	"fmt"
 )
 
+type ProblemState struct {
+	nEvals int
+}
+
+func (p *ProblemState) Reset() {
+	p.nEvals = 0
+}
+
 type Problem interface {
 	Init(dim int)
 	Eval(x []bool) float64
@@ -15,6 +23,8 @@ func GetProblem(id, dim, instance int) Problem {
 
 	var p Problem
 	switch id {
+	case 0:
+		p = &KnapsackProblem{}
 	case 1:
 		p = &OneMaxProblem{}
 	case 2:
@@ -71,14 +81,6 @@ func GetProblem(id, dim, instance int) Problem {
 
 	p.Init(dim)
 	return p
-}
-
-type ProblemState struct {
-	nEvals int
-}
-
-func (p *ProblemState) Reset() {
-	p.nEvals = 0
 }
 
 // UTILS
