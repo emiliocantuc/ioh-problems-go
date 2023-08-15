@@ -15,7 +15,7 @@ func testEval(p Problem) float64 {
 
 // Tests that all problems increment their eval count properly
 func TestNEvals(t *testing.T) {
-	for i := 0; i <= 24; i++ { // TODO make 25
+	for i := 0; i <= 25; i++ {
 
 		p := GetProblem(i, 9, 0)
 
@@ -38,7 +38,7 @@ func TestNEvals(t *testing.T) {
 // Tests that all problems implement seed instances correctly
 func TestSeeds(t *testing.T) {
 
-	for i := 0; i <= 24; i++ { // TODO make 25
+	for i := 0; i <= 25; i++ {
 
 		p1 := GetProblem(i, 9, 0)
 		p2 := GetProblem(i, 9, 0)
@@ -99,47 +99,45 @@ func TestProblems(t *testing.T) {
 
 }
 
-// func TestAproxProblems(t *testing.T) {
+func TestAproxProblems(t *testing.T) {
 
-// 	tests := []struct {
-// 		id    int
-// 		score float64
-// 	}{
+	tests := []struct {
+		id    int
+		score float64
+	}{
 
-// 		{4, -22.7},
-// 		{5, -20.18},
-// 		{11, -22.7},
-// 		{12, -25.2},
-// 		{24, -29.1},
-// 		// {25, -32.0},
-// 	}
+		// {4, -22.7},
+		// {5, -20.18},
+		// {11, -22.7},
+		// {12, -25.2},
+		// {24, -29.1},
+		{25, -32.0},
+	}
 
-// 	eps := 0.5
-// 	n := 1000 //1000000 //+0
+	eps := 0.5
+	n := 10 //1000000 //+0
 
-// 	for _, test := range tests {
+	for _, test := range tests {
 
-// 		testName := fmt.Sprintf("%d", test.id)
+		testName := fmt.Sprintf("%d", test.id)
 
-// 		t.Run(testName, func(t *testing.T) {
+		t.Run(testName, func(t *testing.T) {
 
-// 			avg := 0.0
-// 			for i := 0; i < n; i++ {
-// 				p := GetProblem(test.id, 9, 0)
-// 				if testEval(p) < 0 {
-// 					fmt.Println("negative")
-// 				}
-// 				avg += testEval(p)
-// 			}
-// 			fmt.Println(avg)
-// 			avg /= float64(n)
+			avg := 0.0
+			for i := 0; i < n; i++ {
+				p := GetProblem(test.id, 9, i)
+				fmt.Println(testEval(p))
+				avg += testEval(p)
+			}
+			fmt.Println(avg)
+			avg /= float64(n)
 
-// 			fmt.Println(testName, avg)
+			fmt.Println(testName, avg)
 
-// 			if math.Abs(avg-test.score) > eps {
-// 				t.Errorf("%s got %f wanted %f", testName, avg, test.score)
-// 			}
-// 		})
-// 	}
+			if math.Abs(avg-test.score) > eps {
+				t.Errorf("%s got %f wanted %f", testName, avg, test.score)
+			}
+		})
+	}
 
-// }
+}

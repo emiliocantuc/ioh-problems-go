@@ -1,7 +1,9 @@
 package pbo
 
 import (
+	"fmt"
 	"math"
+	"math/rand"
 )
 
 // Id: 25
@@ -10,6 +12,7 @@ type NKLandscapesProblem struct {
 	state ProblemState
 	f_    [][]float64
 	e_    [][]int
+	k     int
 }
 
 func (p *NKLandscapesProblem) Init(dim int) {
@@ -21,13 +24,13 @@ func (p *NKLandscapesProblem) Init(dim int) {
 func (p *NKLandscapesProblem) setNK(n, k int) {
 
 	if k > n {
-		panic("k <= n")
+		fmt.Println("NK_Landscapes, k > n")
 	}
-
 	for i := 0; i < n; i++ {
 		randVec := make([]float64, k)
-		for j := 0; j < k; j++ {
-			randVec[j] = float64(j+1) * float64(i+1)
+		// r := rand.New(rand.NewSource(int64(k * (i + 1))))
+		for j := range randVec {
+			randVec[j] = rand.Float64()
 		}
 
 		sampledNumber := make([]int, 0)
@@ -52,14 +55,14 @@ func (p *NKLandscapesProblem) setNK(n, k int) {
 		p.e_ = append(p.e_, sampledNumber)
 	}
 	for i := 0; i < n; i++ {
-		f_i := make([]float64, int(math.Pow(2, float64(k+1))))
-		for j := 0; j < int(math.Pow(2, float64(k+1))); j++ {
-			f_i[j] = float64(j+1) * float64(k) * float64(i+1) * 2
+		fRow := make([]float64, int(math.Pow(2, float64(k+1))))
+		// r := rand.New(rand.NewSource(int64(k * (i + 1) * 2)))
+		for j := range fRow {
+			fRow[j] = rand.Float64()
 		}
-		p.f_ = append(p.f_, f_i)
+		p.f_ = append(p.f_, fRow)
 	}
 }
-
 func (p *NKLandscapesProblem) Eval(x []bool) float64 {
 	k := 1
 	result := 0.0
@@ -71,12 +74,12 @@ func (p *NKLandscapesProblem) Eval(x []bool) float64 {
 		result += p.f_[i][index]
 	}
 
-	result = -result / float64(len(x))
+	result = result / float64(len(x))
 
 	// Update state
 	p.state.nEvals++
 
-	return result
+	return -result
 }
 
 func (p *NKLandscapesProblem) State() ProblemState {

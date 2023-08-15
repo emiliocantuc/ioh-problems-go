@@ -6,5 +6,4 @@ Note: We added the knapsack problem as id = 0 to the benchmark.
 
 
 ## TODO
-- check why p.25 crashes
 - check why inexact tests fail (no negative evals)
